@@ -10,7 +10,7 @@ namespace onlineKredit.web.Controllers
     {
         public ActionResult Index()
         {
-            /// hallo welt
+            
             return View();
         }
 
