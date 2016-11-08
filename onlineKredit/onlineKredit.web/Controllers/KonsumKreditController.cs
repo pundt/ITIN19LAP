@@ -1,6 +1,7 @@
 ﻿using onlineKredit.web.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,13 +13,28 @@ namespace onlineKredit.web.Controllers
         [HttpGet]
         public ActionResult KreditRahmen()
         {
+            Debug.WriteLine("GET - KonsumKredit - KreditRahmen");
+
             return View();
         }
 
         [HttpPost]
         public ActionResult KreditRahmen(KreditRahmenModel model)
         {
-            return View();
+            Debug.WriteLine("GET - KonsumKredit - KreditRahmen");
+
+            if (ModelState.IsValid)
+            {
+                /// speichere Daten über BusinessLogic
+                
+
+                /// gehe zum nächsten Schritt
+                return RedirectToAction("FinanzielleSituation");
+            }
+
+            /// falls der ModelState NICHT valid ist, bleibe hier und
+            /// gib die Daten (falls vorhanden) wieder auf das UI
+            return View(model);
         }
 
         [HttpGet]
