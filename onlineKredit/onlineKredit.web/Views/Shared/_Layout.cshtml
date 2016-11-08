@@ -1,0 +1,109 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Deutsche Bank AG - Wunschkredit online</title>
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="~/Content/js/jquery-1.11.0.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <!-- Custom Theme files -->
+    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Advice Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" type="text/css" media="all">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:900,800,700,600" type="text/css" media="all">
+</head>
+<body>
+    <!--header start here-->
+    <div class="header">
+        <div class="container">
+            <div class="header-main">
+                <div class="header-right">
+                    <div class="logo">
+                        <h1><a href="@Url.Action("Index","Home")">Deutsche Bank AG</a></h1>
+                    </div>
+
+                    <div class="phone">
+                        <h2>Telefon<span class="ph-numb">+49 (0)123 4566 484 - 993</span></h2>
+                    </div>
+                    <div class="form-group">
+                        <form action="#" method="post">
+                            <input type="text" name="text" class="form-control" placeholder="Suchen">
+                            <button type="submit" class="btn btn-default" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+    </div>
+    <!--header end here-->
+    <!--top nav start here-->
+    <div class="top-nav">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    Menu
+                </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="hvr-bounce-to-bottom active"><a href="@Url.Action("Index", "Home")">Deutsche Bank AG</a></li>
+                        <li class="hvr-bounce-to-bottom"><a href="@Url.Action("KreditRahmen", "KonsumKredit")" class="scroll">Kredit-Rechner</a></li>
+                        <li class="hvr-bounce-to-bottom"><a href="@Url.Action("Kontakt", "Home")" class="scroll">Kontakt</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    @RenderBody()
+
+    <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 0;"> </span></a>
+    <!--contact-->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="~/Content/js/move-top.js"></script>
+    <script type="text/javascript" src="~/Content/js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1200);
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*
+            var defaults = {
+            containerID: 'toTop', // fading element id
+            containerHoverID: 'toTopHover', // fading element hover id
+            scrollSpeed: 1200,
+            easingType: 'linear'
+            };
+            */
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    </script>
+
+    <!-- //end-smoth-scrolling -->
+    <!--script-->
+    <script src="~/Content/js/modernizr.custom.97074.js"></script>
+    <script src="~/Content/js/jquery.chocolat.js"></script>
+    <link rel="stylesheet" href="~/Content/css/chocolat.css" type="text/css" media="all">
+
+    @RenderSection("scripts", required: false)
+    <!--script-->
+</body>
+</html>

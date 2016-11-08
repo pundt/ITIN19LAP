@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<!--top nav end here-->
+<!--banner start here-->
+<div class="banner">
+</div>
+<!--banner end here-->
+<!--about-->
+<div class="about" id="about">
+    <div class="container">
+        <div class="col-md-4 about-left">
+            <div class="ab-top">
+                <h3>100%</h3>
+                <h5>Kredit-Rechner</h5>
+                <p>Hier geht es rasch und unkompliziert zu Ihrem Wunschkredit.</p>
+                @*<a href="#" data-toggle="modal" data-target="#myModal">Mehr Informationen</a>*@
+                @Html.ActionLink("Zum Wunschkredit", "KreditRahmen", "KonsumKredit")
+            </div>
+        </div>
+        <div class="col-md-8 about-right">
+            <h3>Dienstleistungen</h3>
+            <div class="col-md-12 ab-lft">
+                <h4>Corporate & Investment Banking</h4>
+                <p>
+                    Corporate & Investment Banking in Österreich besteht aus den Bereichen Corporate Finance (CF), Debt Capital Markets – Financing & Solutions Group (DCM-FSG) und Global Transaction Banking (GTB).
+                    <br /><br />
+                    Corporate Finance ist für Fusionen und Übernahmen, die Emission von Anleihen und Aktien sowie die Betreuung von Groß- und Mittelstandsunternehmen im Kapitalmarktgeschäft zuständig. Regionale branchefokussierte Teams stellen sicher, dass den Kunden alle angebotene Finanzierungsprodukte und Serviceleistungen aus einer Hand zur Verfügung stehen.
+                    <br /><br />
+                    Bitte besuchen Sie unsere Seite für Firmenkunden<br />
+                    deutsche Version: <a class="link" href="https://www.db.com/fk/">https://www.db.com/fk/</a>
+                </p>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="abt-bottom">
+                <div class="col-md-6 ab-lft">
+                    <h4>Wealth Management</h4>
+                    <p>
+                        Das Wealth Management der Deutsche Bank Österreich AG betreut vermögende Privatkunden, Familien, Stiftungen und ausgewählte Institutionen und entwickelt darüber hinaus erstklassige Lösungen für Familienunternehmen und unabhängige Vermögensverwalter.<br />
+                        <br />
+                        Bitte besuchen Sie: <a class="link" href="http://deutschewealth.com/austria/de/index_austria.html">deutschewealth.com/</a>
+                    </p>
+                </div>
+                <div class="col-md-6 ab-lft">
+                    <h4>Asset Management</h4>
+                    <p>
+                        Umfassende und auf den Bedarf ausgerichtete Asset Management-Lösungen für Retail- sowie Institutionelle Kunden.<br />
+                        <br />
+                        Bitte besuchen Sie: <a class="link" href="http://www.dws.at">dws.at</a>
+                    </p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!--about-->
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Pellentesque vehicula</h4>
+            </div>
+            <div class="modal-body">
+                <p>In varius sem id aliquet rutrum. Pellentesque ut neque ligula. Fusce dapibus volutpat magna, ac feugiat dolor bibendum et. Integer dignissim gravida nunc, eget hendrerit enim. Quisque dapibus mollis finibus. Curabitur nulla enim, aliquet ac ultricies luctus, lacinia ut felis. Etiam aliquam massa nec lorem pulvinar porttitor. Maecenas in rutrum purus, eget consectetur arcu. Sed id pretium ligula, id hendrerit nunc. Nam ut tincidunt erat, sit amet accumsan risus..</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--// Modal -->
