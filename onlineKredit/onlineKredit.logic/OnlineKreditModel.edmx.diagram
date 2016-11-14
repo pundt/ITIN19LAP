@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9f84c33297cf4e2789be7e11b86dc5a4" Name="Diagram1" ZoomLevel="112">
+        <EntityTypeShape EntityType="onlineKreditModel.Arbeitgeber" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Beschaeftigungsart" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Branche" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Einstellungen" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.FamilienStand" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.FinanzielleSituation" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.IdentifikatikonsArt" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.KontaktDaten" Width="1.5" PointX="8.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.KontoDaten" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.KreditWunsch" Width="1.5" PointX="5.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Kunde" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Land" Width="1.5" PointX="3.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Ort" Width="1.5" PointX="6" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Schulabschluss" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Titel" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.TitelNachstehend" Width="1.5" PointX="0.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.Wohnart" Width="1.5" PointX="0.75" PointY="18.5" IsExpanded="true" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblArbeit__FKBes__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblArbeit__FKBra__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblArbeit__IDArb__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKFami__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblFinanz__IDFin__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKIden__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKontak__FKOrt__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKontak__IDKon__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKontoD__IDKon__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKredit__IDKre__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKSchu__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKTite__24927208" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKTite__25869641" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKWohn__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblOrt__FKLand__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKStaa__25869641" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

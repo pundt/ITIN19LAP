@@ -1,4 +1,5 @@
-﻿using onlineKredit.web.Models;
+﻿using onlineKredit.logic;
+using onlineKredit.web.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,6 +20,7 @@ namespace onlineKredit.web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult KreditRahmen(KreditRahmenModel model)
         {
             Debug.WriteLine("POST - KonsumKredit - KreditRahmen");
@@ -26,7 +28,8 @@ namespace onlineKredit.web.Controllers
             if (ModelState.IsValid)
             {
                 /// speichere Daten über BusinessLogic
-                
+                Kunde neuerKunde = KonsumKreditVerwaltung.ErzeugeKunde();
+
 
                 /// gehe zum nächsten Schritt
                 return RedirectToAction("FinanzielleSituation");
@@ -44,6 +47,7 @@ namespace onlineKredit.web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult FinanzielleSituation(FinanzielleSituationModel model)
         {
             Debug.WriteLine("POST - KonsumKredit - FinanzielleSituation");
