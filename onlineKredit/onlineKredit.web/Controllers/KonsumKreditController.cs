@@ -21,7 +21,7 @@ namespace onlineKredit.web.Controllers
         [HttpPost]
         public ActionResult KreditRahmen(KreditRahmenModel model)
         {
-            Debug.WriteLine("GET - KonsumKredit - KreditRahmen");
+            Debug.WriteLine("POST - KonsumKredit - KreditRahmen");
 
             if (ModelState.IsValid)
             {
@@ -46,7 +46,17 @@ namespace onlineKredit.web.Controllers
         [HttpPost]
         public ActionResult FinanzielleSituation(FinanzielleSituationModel model)
         {
-            return View();
+            Debug.WriteLine("POST - KonsumKredit - FinanzielleSituation");
+
+            if (ModelState.IsValid)
+            {
+                /// speichere Daten über BusinessLogic
+
+
+                return RedirectToAction("PersönlicheDaten");
+            }
+
+            return View(model);
         }
 
         [HttpGet]

@@ -123,7 +123,8 @@ input.form-control {
 	color:#fff;
     background: none;
     box-shadow: none;
-    border-radius: 0;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 button.btn.btn-default {
     border: none;
