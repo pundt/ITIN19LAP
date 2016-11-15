@@ -25,6 +25,7 @@ namespace onlineKredit.logic
         public Nullable<int> FKSchulabschluss { get; set; }
         public string IdentifikationsNummer { get; set; }
         public Nullable<int> FKIdentifikationsArt { get; set; }
+        public string Gechlecht { get; set; }
     
         public virtual Arbeitgeber Arbeitgeber { get; set; }
         public virtual FamilienStand Familienstand { get; set; }

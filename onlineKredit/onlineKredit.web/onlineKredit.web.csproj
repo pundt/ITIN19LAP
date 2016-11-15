@@ -125,10 +125,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BildungsModel.cs" />
     <Compile Include="Models\FinanzielleSituationModel.cs" />
+    <Compile Include="Models\FamilienStandModel.cs" />
+    <Compile Include="Models\IdentifikationsModel.cs" />
+    <Compile Include="Models\NachschlageFeldModel.cs" />
     <Compile Include="Models\PersönlicheDatenModel.cs" />
     <Compile Include="Models\ArbeitgeberModel.cs" />
     <Compile Include="Models\KontoInformationenModel.cs" />
+    <Compile Include="Models\StaatsbuergerschaftsModel.cs" />
+    <Compile Include="Models\TitelModel.cs" />
+    <Compile Include="Models\TitelNachstehendModel.cs" />
+    <Compile Include="Models\WohnartModel.cs" />
     <Compile Include="Models\ZusammenfassungModel.cs" />
     <Compile Include="Models\KreditRahmenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -212,6 +220,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\KonsumKredit\KreditRahmen.cshtml" />
     <Content Include="Views\KonsumKredit\FinanzielleSituation.cshtml" />
+    <Content Include="Views\KonsumKredit\PersönlicheDaten.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

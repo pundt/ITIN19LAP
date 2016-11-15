@@ -99,6 +99,7 @@
             <PropertyRef Name="IDKunde" />
           </Key>
           <Property Name="IDKunde" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Gechlecht" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="Vorname" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Nachname" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="FKTitel" Type="int" />
@@ -561,6 +562,7 @@
           <NavigationProperty Name="TitelNachstehend" Relationship="Self.FK__tblKunde__FKTite__25869641" FromRole="tblKunde" ToRole="tblTitelNachstehend" />
           <NavigationProperty Name="Wohnart" Relationship="Self.FK__tblKunde__FKWohn__286302EC" FromRole="tblKunde" ToRole="tblWohnart" />
           <NavigationProperty Name="Staatsangehoerigkeit" Relationship="onlineKreditModel.FK__tblKunde__FKStaa__25869641" FromRole="Kunde" ToRole="Land" />
+          <Property Name="Gechlecht" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="Land">
           <Key>
@@ -997,6 +999,7 @@
           <EntitySetMapping Name="AlleKunden">
             <EntityTypeMapping TypeName="onlineKreditModel.Kunde">
               <MappingFragment StoreEntitySet="tblKunde">
+                <ScalarProperty Name="Gechlecht" ColumnName="Gechlecht" />
                 <ScalarProperty Name="ID" ColumnName="IDKunde" />
                 <ScalarProperty Name="Vorname" ColumnName="Vorname" />
                 <ScalarProperty Name="Nachname" ColumnName="Nachname" />
