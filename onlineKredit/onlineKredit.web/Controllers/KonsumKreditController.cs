@@ -30,9 +30,17 @@ namespace onlineKredit.web.Controllers
                 /// speichere Daten über BusinessLogic
                 Kunde neuerKunde = KonsumKreditVerwaltung.ErzeugeKunde();
 
+                if (neuerKunde != null && KonsumKreditVerwaltung.KreditRahmenSpeichern(model.GewünschterBetrag, model.Laufzeit, neuerKunde.ID))
+                {
+                    /// ich benötige für alle weiteren Schritte die ID
+                    /// des angelegten Kunden. Damit ich diese bei der nächsten Action
+                    /// habe, speichere ich sie für diesen Zweck in die TempData Variable
+                    /// (ähnlich wie Session)
+                    TempData["idKunde"] = neuerKunde.ID;
 
-                /// gehe zum nächsten Schritt
-                return RedirectToAction("FinanzielleSituation");
+                    /// gehe zum nächsten Schritt
+                    return RedirectToAction("FinanzielleSituation");
+                }
             }
 
             /// falls der ModelState NICHT valid ist, bleibe hier und
@@ -43,7 +51,14 @@ namespace onlineKredit.web.Controllers
         [HttpGet]
         public ActionResult FinanzielleSituation()
         {
-            return View();
+            Debug.WriteLine("GET - KonsumKredit - FinanzielleSituation");
+
+            FinanzielleSituationModel model = new FinanzielleSituationModel()
+            {
+                ID_Kunde = int.Parse(TempData["idKunde"].ToString())
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -55,9 +70,17 @@ namespace onlineKredit.web.Controllers
             if (ModelState.IsValid)
             {
                 /// speichere Daten über BusinessLogic
-
-
-                return RedirectToAction("PersönlicheDaten");
+                if (KonsumKreditVerwaltung.FinanzielleSituationSpeichern(
+                                                model.NettoEinkommen, 
+                                                model.RatenVerpflichtungen, 
+                                                model.Wohnkosten, 
+                                                model.EinkünfteAlimenteUnterhalt, 
+                                                model.UnterhaltsZahlungen, 
+                                                model.ID_Kunde))
+                {
+                    TempData["idKunde"] = model.ID_Kunde;
+                    return RedirectToAction("PersönlicheDaten");
+                }
             }
 
             return View(model);
@@ -66,7 +89,12 @@ namespace onlineKredit.web.Controllers
         [HttpGet]
         public ActionResult PersönlicheDaten()
         {
-            return View();
+            Debug.WriteLine("GET - KonsumKredit - PersönlicheDaten");
+            PersönlicheDatenModel model = new PersönlicheDatenModel()
+            {
+                ID_Kunde = int.Parse(TempData["idKunde"].ToString())
+            };
+            return View(model);
         }
 
         [HttpPost]

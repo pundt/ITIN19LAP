@@ -10,7 +10,7 @@
             <PropertyRef Name="IDArbeitgeber" />
           </Key>
           <Property Name="IDArbeitgeber" Type="int" Nullable="false" />
-          <Property Name="Firma" Type="varchar" MaxLength="30" />
+          <Property Name="Firma" Type="nvarchar" MaxLength="30" />
           <Property Name="FKBeschaeftigungsArt" Type="int" />
           <Property Name="FKBranche" Type="int" />
           <Property Name="BeschaeftigtSeit" Type="date" />
@@ -20,14 +20,14 @@
             <PropertyRef Name="IDBeschaeftigungsart" />
           </Key>
           <Property Name="IDBeschaeftigungsart" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Beschaeftigungsart" Type="varchar" MaxLength="15" />
+          <Property Name="Beschaeftigungsart" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="tblBranche">
           <Key>
             <PropertyRef Name="IDBranche" />
           </Key>
           <Property Name="IDBranche" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Branche" Type="varchar" MaxLength="25" />
+          <Property Name="Branche" Type="nvarchar" MaxLength="25" />
         </EntityType>
         <EntityType Name="tblEinstellungen">
           <Key>
@@ -43,7 +43,7 @@
             <PropertyRef Name="IDFamilienstand" />
           </Key>
           <Property Name="IDFamilienstand" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Familienstand" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Familienstand" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="tblFinanzielleSituation">
           <Key>
@@ -54,13 +54,14 @@
           <Property Name="Wohnkosten" Type="decimal" Precision="10" Scale="2" />
           <Property Name="EinkuenfteALIUNT" Type="decimal" Precision="10" Scale="2" />
           <Property Name="AusgabenALIUNT" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="RatenZahlungen" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="tblIdentifikationsArt">
           <Key>
             <PropertyRef Name="IDIdentifikationsArt" />
           </Key>
           <Property Name="IDIdentifikationsArt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdentifikationsArt" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdentifikationsArt" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="tblKontaktDaten">
           <Key>
@@ -68,28 +69,28 @@
           </Key>
           <Property Name="IDKontaktDaten" Type="int" Nullable="false" />
           <Property Name="FKOrt" Type="int" />
-          <Property Name="Strasse" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Hausnummer" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="Stiege" Type="varchar" MaxLength="2" />
-          <Property Name="Tuer" Type="varchar" MaxLength="2" />
-          <Property Name="EMail" Type="varchar(max)" />
-          <Property Name="Telefonnummer" Type="varchar" MaxLength="20" />
+          <Property Name="Strasse" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Hausnummer" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Stiege" Type="nvarchar" MaxLength="2" />
+          <Property Name="Tuer" Type="nvarchar" MaxLength="2" />
+          <Property Name="EMail" Type="nvarchar(max)" />
+          <Property Name="Telefonnummer" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="tblKontoDaten">
           <Key>
             <PropertyRef Name="IDKontoDaten" />
           </Key>
           <Property Name="IDKontoDaten" Type="int" Nullable="false" />
-          <Property Name="BIC" Type="varchar" MaxLength="25" />
-          <Property Name="IBAN" Type="varchar" MaxLength="25" />
+          <Property Name="BIC" Type="nvarchar" MaxLength="25" />
+          <Property Name="IBAN" Type="nvarchar" MaxLength="25" />
           <Property Name="DeutscheBankKunde" Type="bit" />
-          <Property Name="Bank" Type="varchar" MaxLength="30" />
+          <Property Name="Bank" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="tblKredit">
           <Key>
             <PropertyRef Name="IDKredit" />
           </Key>
-          <Property Name="IDKredit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDKredit" Type="int" Nullable="false" />
           <Property Name="GewuenschterKredit" Type="decimal" Precision="10" Scale="2" />
           <Property Name="GewuenschteLaufzeit" Type="int" />
         </EntityType>
@@ -98,60 +99,60 @@
             <PropertyRef Name="IDKunde" />
           </Key>
           <Property Name="IDKunde" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Vorname" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Nachname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Vorname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Nachname" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="FKTitel" Type="int" />
           <Property Name="FKTitelNachstehend" Type="int" />
           <Property Name="FKFamilienstand" Type="int" />
-          <Property Name="FKStaatsangehoerigkeit" Type="char" MaxLength="3" />
+          <Property Name="FKStaatsangehoerigkeit" Type="nchar" MaxLength="3" />
           <Property Name="FKWohnart" Type="int" />
           <Property Name="FKSchulabschluss" Type="int" />
-          <Property Name="IdentifikationsNummer" Type="varchar" MaxLength="30" />
+          <Property Name="IdentifikationsNummer" Type="nvarchar" MaxLength="30" />
           <Property Name="FKIdentifikationsArt" Type="int" />
         </EntityType>
         <EntityType Name="tblLand">
           <Key>
             <PropertyRef Name="IDLand" />
           </Key>
-          <Property Name="IDLand" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="Land" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Vorwahl" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="IDLand" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="Land" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Vorwahl" Type="nchar" MaxLength="4" Nullable="false" />
         </EntityType>
         <EntityType Name="tblOrt">
           <Key>
             <PropertyRef Name="IDOrt" />
           </Key>
           <Property Name="IDOrt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PLZ" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="FKLand" Type="char" MaxLength="3" />
+          <Property Name="PLZ" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="FKLand" Type="nchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="tblSchulabschluss">
           <Key>
             <PropertyRef Name="IDSchulabschluss" />
           </Key>
           <Property Name="IDSchulabschluss" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Schulabschluss" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Schulabschluss" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTitel">
           <Key>
             <PropertyRef Name="IDTitel" />
           </Key>
           <Property Name="IDTitel" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Titel" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTitelNachstehend">
           <Key>
             <PropertyRef Name="IDTitelNachstehend" />
           </Key>
           <Property Name="IDTitelNachstehend" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TitelNachstehend" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TitelNachstehend" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="tblWohnart">
           <Key>
             <PropertyRef Name="IDWohnart" />
           </Key>
           <Property Name="IDWohnart" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Wohnart" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Wohnart" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <Association Name="FK__tblArbeit__FKBes__33D4B598">
           <End Role="tblBeschaeftigungsart" Type="Self.tblBeschaeftigungsart" Multiplicity="0..1" />
@@ -437,7 +438,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Firma" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Firma" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="FKBeschaeftigungsArt" Type="Int32" />
           <Property Name="FKBranche" Type="Int32" />
           <Property Name="BeschaeftigtSeit" Type="DateTime" Precision="0" />
@@ -450,7 +451,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bezeichnung" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AlleArbeitgeber" Relationship="Self.FK__tblArbeit__FKBes__35BCFE0A" FromRole="tblBeschaeftigungsart" ToRole="tblArbeitgeber" />
         </EntityType>
         <EntityType Name="Branche">
@@ -458,7 +459,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bezeichnung" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AlleArbeitgeber" Relationship="Self.FK__tblArbeit__FKBra__36B12243" FromRole="tblBranche" ToRole="tblArbeitgeber" />
         </EntityType>
         <EntityType Name="Einstellungen">
@@ -475,7 +476,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bezeichnung" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK__tblKunde__FKFami__267ABA7A" FromRole="tblFamilienstand" ToRole="tblKunde" />
         </EntityType>
         <EntityType Name="FinanzielleSituation">
@@ -488,13 +489,14 @@
           <Property Name="EinkuenfteAlimenteUnterhalt" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK__tblFinanz__IDFin__3F466844" FromRole="tblFinanzielleSituation" ToRole="tblKunde" />
           <Property Name="AusgabenALIUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="RatenZahlungen" Type="Decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="IdentifikatikonsArt">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdentifikationsArt" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdentifikationsArt" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AlleKunden" Relationship="Self.FK__tblKunde__FKIden__2A4B4B5E" FromRole="tblIdentifikationsArt" ToRole="tblKunde" />
         </EntityType>
         <EntityType Name="KontaktDaten">
@@ -503,12 +505,12 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="FKOrt" Type="Int32" />
-          <Property Name="Strasse" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Hausnummer" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Stiege" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="Tuer" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Telefonnummer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Strasse" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Hausnummer" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Stiege" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Tuer" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telefonnummer" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Ort" Relationship="Self.FK__tblKontak__FKOrt__2E1BDC42" FromRole="tblKontaktDaten" ToRole="tblOrt" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK__tblKontak__IDKon__2D27B809" FromRole="tblKontaktDaten" ToRole="tblKunde" />
         </EntityType>
@@ -517,10 +519,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="BIC" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="IBAN" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="BIC" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="IBAN" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="IstDB_Kunde" Type="Boolean" />
-          <Property Name="BankName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="BankName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK__tblKontoD__IDKon__398D8EEE" FromRole="tblKontoDaten" ToRole="tblKunde" />
         </EntityType>
         <EntityType Name="KreditWunsch">
@@ -537,15 +539,15 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Vorname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nachname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Vorname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nachname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FKTitel" Type="Int32" />
           <Property Name="FKTitelNachstehend" Type="Int32" />
           <Property Name="FKFamilienstand" Type="Int32" />
-          <Property Name="FKStaatsangehoerigkeit" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="FKStaatsangehoerigkeit" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="FKWohnart" Type="Int32" />
           <Property Name="FKSchulabschluss" Type="Int32" />
-          <Property Name="IdentifikationsNummer" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IdentifikationsNummer" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="FKIdentifikationsArt" Type="Int32" />
           <NavigationProperty Name="Arbeitgeber" Relationship="Self.FK__tblArbeit__IDArb__34C8D9D1" FromRole="tblKunde" ToRole="tblArbeitgeber" />
           <NavigationProperty Name="Familienstand" Relationship="Self.FK__tblKunde__FKFami__267ABA7A" FromRole="tblKunde" ToRole="tblFamilienstand" />
@@ -564,9 +566,9 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Bezeichnung" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Vorwahl" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ID" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Vorwahl" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AlleOrte" Relationship="Self.FK__tblOrt__FKLand__145C0A3F" FromRole="tblLand" ToRole="tblOrt" />
           <NavigationProperty Name="AlleKunden_Staatsangehoerigkeit" Relationship="onlineKreditModel.FK__tblKunde__FKStaa__25869641" FromRole="Land" ToRole="Kunde" />
         </EntityType>
@@ -575,8 +577,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PLZ" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FKLand" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="PLZ" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FKLand" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="AlleKontaktDaten" Relationship="Self.FK__tblKontak__FKOrt__2E1BDC42" FromRole="tblOrt" ToRole="tblKontaktDaten" />
           <NavigationProperty Name="Land" Relationship="Self.FK__tblOrt__FKLand__145C0A3F" FromRole="tblOrt" ToRole="tblLand" />
         </EntityType>
@@ -585,7 +587,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AlleKunden" Relationship="Self.FK__tblKunde__FKSchu__29572725" FromRole="tblSchulabschluss" ToRole="tblKunde" />
         </EntityType>
         <EntityType Name="Titel">
@@ -593,7 +595,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK__tblKunde__FKTite__24927208" FromRole="tblTitel" ToRole="tblKunde" />
         </EntityType>
         <EntityType Name="TitelNachstehend">
@@ -601,7 +603,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK__tblKunde__FKTite__25869641" FromRole="tblTitelNachstehend" ToRole="tblKunde" />
         </EntityType>
         <EntityType Name="Wohnart">
@@ -609,7 +611,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK__tblKunde__FKWohn__286302EC" FromRole="tblWohnart" ToRole="tblKunde" />
         </EntityType>
         <Association Name="FK__tblArbeit__FKBes__35BCFE0A">
@@ -941,6 +943,7 @@
           <EntitySetMapping Name="AlleFinanzielleSituationen">
             <EntityTypeMapping TypeName="onlineKreditModel.FinanzielleSituation">
               <MappingFragment StoreEntitySet="tblFinanzielleSituation">
+                <ScalarProperty Name="RatenZahlungen" ColumnName="RatenZahlungen" />
                 <ScalarProperty Name="AusgabenALIUNT" ColumnName="AusgabenALIUNT" />
                 <ScalarProperty Name="ID" ColumnName="IDFinanzielleSituation" />
                 <ScalarProperty Name="MonatsEinkommen" ColumnName="MonatsEinkommenNetto" />

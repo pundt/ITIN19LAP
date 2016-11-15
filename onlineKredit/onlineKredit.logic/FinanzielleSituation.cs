@@ -19,6 +19,7 @@ namespace onlineKredit.logic
         public Nullable<decimal> Wohnkosten { get; set; }
         public Nullable<decimal> EinkuenfteAlimenteUnterhalt { get; set; }
         public Nullable<decimal> AusgabenALIUNT { get; set; }
+        public Nullable<decimal> RatenZahlungen { get; set; }
     
         public virtual Kunde Kunde { get; set; }
     }

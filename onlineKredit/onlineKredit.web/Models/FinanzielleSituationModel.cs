@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace onlineKredit.web.Models
 {
@@ -37,5 +38,9 @@ namespace onlineKredit.web.Models
         [Range(0, 10000, ErrorMessage = "Wert muss zwischen 0 und 10000 liegen")]
         [Display(Name = "Raten-Verpflichtungen")]
         public double RatenVerpflichtungen { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        [Required]
+        public int ID_Kunde { get; set; }
     }
 }
