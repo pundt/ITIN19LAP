@@ -181,9 +181,11 @@
     <Content Include="Content\js\ion.rangeSlider.js" />
     <Content Include="Content\js\ion.rangeSlider.min.js" />
     <Content Include="Content\js\jquery-1.11.0.min.js" />
+    <Content Include="Content\js\jquery-3.1.1.min.js" />
     <Content Include="Content\js\jquery.chocolat.js" />
     <Content Include="Content\js\jquery.hoverdir.js" />
     <Content Include="Content\js\modernizr.custom.97074.js" />
+    <Content Include="Content\js\moment-with-locales.min.js" />
     <Content Include="Content\js\move-top.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

@@ -48,7 +48,7 @@
                     @Html.ValidationMessageFor(model => model.ID_Branche, "", new { @class = "text-danger" })
                 </div>
             </div>
-          
+
             <div class="row">
                 <div class="col-lg-offset-1 col-md-offset-1 col-lg-3 col-md-3" style="text-align: right">
                     @Html.LabelFor(model => model.BeschäftigtSeit, htmlAttributes: new { @class = "control-label" })
@@ -57,13 +57,14 @@
                     <div class='input-group date'
                          data-datepicker
                          data-datepickermaxdate="now"
-                         data-datepickerformat="MM.YYYY">
-                        @Html.TextBoxFor(model => model.BeschäftigtSeit, new { @class = "form-control", placeholder = "mm.jjjj" })
+                         data-datepickerformat="MM.YYYY"
+                         id="datePicker1">
+                        @Html.TextBoxFor(model => model.BeschäftigtSeit, new { @class = "form-control", placeholder = "mm.jjjj", id = "beschaeftigtSeit" })
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
-                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-offset-4 col-md-offset-4 col-lg-3 col-md-3">
@@ -79,6 +80,16 @@
 
 
 @section Scripts {
+    <script type="text/javascript">
+        // https://eonasdan.github.io/bootstrap-datetimepicker/
+
+        $(function () {
+            $('#datePicker1').datetimepicker({
+                format: 'MM.YYYY'
+            });
+        });
+    </script>
+
     @Scripts.Render("~/bundles/jqueryval")
 }
 
