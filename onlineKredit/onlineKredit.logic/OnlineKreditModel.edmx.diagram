@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="onlineKreditModel.Einstellungen" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="onlineKreditModel.FamilienStand" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="onlineKreditModel.FinanzielleSituation" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="onlineKreditModel.IdentifikatikonsArt" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="onlineKreditModel.IdentifikationsArt" Width="2" PointX="0.5" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="onlineKreditModel.KontaktDaten" Width="1.5" PointX="8.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="onlineKreditModel.KontoDaten" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="onlineKreditModel.KreditWunsch" Width="1.5" PointX="5.25" PointY="18.25" IsExpanded="true" />

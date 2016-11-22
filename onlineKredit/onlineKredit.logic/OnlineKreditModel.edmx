@@ -492,12 +492,12 @@
           <Property Name="AusgabenALIUNT" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="RatenZahlungen" Type="Decimal" Precision="10" Scale="2" />
         </EntityType>
-        <EntityType Name="IdentifikatikonsArt">
+        <EntityType Name="IdentifikationsArt">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdentifikationsArt" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AlleKunden" Relationship="Self.FK__tblKunde__FKIden__2A4B4B5E" FromRole="tblIdentifikationsArt" ToRole="tblKunde" />
         </EntityType>
         <EntityType Name="KontaktDaten">
@@ -677,7 +677,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__tblKunde__FKIden__2A4B4B5E">
-          <End Role="tblIdentifikationsArt" Type="onlineKreditModel.IdentifikatikonsArt" Multiplicity="0..1" />
+          <End Role="tblIdentifikationsArt" Type="onlineKreditModel.IdentifikationsArt" Multiplicity="0..1" />
           <End Role="tblKunde" Type="onlineKreditModel.Kunde" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblIdentifikationsArt">
@@ -803,7 +803,7 @@
           <EntitySet Name="AlleEinstellungen" EntityType="onlineKreditModel.Einstellungen" />
           <EntitySet Name="AlleFamilienStandAngaben" EntityType="onlineKreditModel.FamilienStand" />
           <EntitySet Name="AlleFinanzielleSituationen" EntityType="onlineKreditModel.FinanzielleSituation" />
-          <EntitySet Name="AlleIdentifikationsArten" EntityType="onlineKreditModel.IdentifikatikonsArt" />
+          <EntitySet Name="AlleIdentifikationsArten" EntityType="onlineKreditModel.IdentifikationsArt" />
           <EntitySet Name="AlleKontaktDaten" EntityType="onlineKreditModel.KontaktDaten" />
           <EntitySet Name="AlleKontoDaten" EntityType="onlineKreditModel.KontoDaten" />
           <EntitySet Name="AlleKreditWünsche" EntityType="onlineKreditModel.KreditWunsch" />
@@ -955,10 +955,10 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AlleIdentifikationsArten">
-            <EntityTypeMapping TypeName="onlineKreditModel.IdentifikatikonsArt">
+            <EntityTypeMapping TypeName="onlineKreditModel.IdentifikationsArt">
               <MappingFragment StoreEntitySet="tblIdentifikationsArt">
                 <ScalarProperty Name="ID" ColumnName="IDIdentifikationsArt" />
-                <ScalarProperty Name="IdentifikationsArt" ColumnName="IdentifikationsArt" />
+                <ScalarProperty Name="Bezeichnung" ColumnName="IdentifikationsArt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

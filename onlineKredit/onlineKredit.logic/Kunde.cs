@@ -30,7 +30,7 @@ namespace onlineKredit.logic
         public virtual Arbeitgeber Arbeitgeber { get; set; }
         public virtual FamilienStand Familienstand { get; set; }
         public virtual FinanzielleSituation FinanzielleSituation { get; set; }
-        public virtual IdentifikatikonsArt IdentifikationsArt { get; set; }
+        public virtual IdentifikationsArt IdentifikationsArt { get; set; }
         public virtual KontaktDaten KontaktDaten { get; set; }
         public virtual KontoDaten KontoDaten { get; set; }
         public virtual KreditWunsch KreditWunsch { get; set; }

@@ -162,6 +162,68 @@ namespace onlineKredit.logic
         }
 
         /// <summary>
+        /// Liefert alle Branchen zurück
+        /// </summary>
+        /// <returns>alle Branchen oder null bei einem Fehler</returns>
+        public static List<Branche> BranchenLaden()
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - BranchenLaden");
+            Debug.Indent();
+
+            List<Branche> alleBranchen = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    alleBranchen = context.AlleBranchen.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in BranchenLaden");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return alleBranchen;
+        }
+
+        /// <summary>
+        /// Liefert alle Beschaefitgungsarten zurück
+        /// </summary>
+        /// <returns>alle Beschaefitgungsarten oder null bei einem Fehler</returns>
+        public static List<Beschaeftigungsart> BeschaeftigungsArtenLaden()
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - Beschaeftigungsart");
+            Debug.Indent();
+
+            List<Beschaeftigungsart> alleBeschaeftigungsArten = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    alleBeschaeftigungsArten = context.AlleBeschaeftigungsarten.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in Beschaeftigungsart");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return alleBeschaeftigungsArten;
+        }
+
+        /// <summary>
         /// Liefert alle Schulabschlüsse zurück
         /// </summary>
         /// <returns>alle Schulabschlüsse oder null bei einem Fehler</returns>
@@ -289,12 +351,12 @@ namespace onlineKredit.logic
         /// Liefert alle IdentifikatikonsArt zurück
         /// </summary>
         /// <returns>alle IdentifikatikonsArt oder null bei einem Fehler</returns>
-        public static List<IdentifikatikonsArt> IdentifikiationsAngabenLaden()
+        public static List<IdentifikationsArt> IdentifikiationsAngabenLaden()
         {
             Debug.WriteLine("KonsumKreditVerwaltung - IdentifikiationsAngabenLaden");
             Debug.Indent();
 
-            List<IdentifikatikonsArt> alleIdentifikationsArten = null;
+            List<IdentifikationsArt> alleIdentifikationsArten = null;
 
             try
             {
@@ -378,6 +440,23 @@ namespace onlineKredit.logic
             return alleTitelNachstehend;
         }
 
+        /// <summary>
+        /// Speichert die Daten für die übergebene idKunde
+        /// </summary>
+        /// <param name="idTitel">der Titel des Kunden</param>
+        /// <param name="geschlecht">das Geschlecht des Kunden</param>
+        /// <param name="geburtsDatum">das Geburtsdatum des Kunden</param>
+        /// <param name="vorname">der Vorname des Kunden</param>
+        /// <param name="nachname">der Nachname des Kunden</param>
+        /// <param name="idTitelNachstehend">der nachstehende Titel des Kunden</param>
+        /// <param name="idBildung">die Bildung des Kunden</param>
+        /// <param name="idFamilienstand">der Familienstand des Kunden</param>
+        /// <param name="idIdentifikationsart">die Identifikations des Kunden</param>
+        /// <param name="identifikationsNummer">der Identifikations-Nummer des Kunden</param>
+        /// <param name="idStaatsbuergerschaft">die Staatsbürgerschaft des Kunden</param>
+        /// <param name="idWohnart">die Wohnart des Kunden</param>
+        /// <param name="idKunde">die ID des Kunden</param>
+        /// <returns>true wenn das Anpassen der Werte erfolgreich war, ansonsten false</returns>
         public static bool PersönlicheDatenSpeichern(int? idTitel, string geschlecht, DateTime geburtsDatum, string vorname, string nachname, int? idTitelNachstehend, int idBildung, int idFamilienstand, int idIdentifikationsart, string identifikationsNummer, string idStaatsbuergerschaft, int idWohnart, int idKunde)
         {
             Debug.WriteLine("KonsumKreditVerwaltung - PersönlicheDatenSpeichern");
@@ -416,6 +495,59 @@ namespace onlineKredit.logic
             catch (Exception ex)
             {
                 Debug.WriteLine("Fehler in PersönlicheDatenSpeichern");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return erfolgreich;
+        }
+
+        /// <summary>
+        /// Speichert die Angaben des Arbeitsgebers zu einem Kunden
+        /// </summary>
+        /// <param name="firmenName">der Firmenname des Arbeitgeber des Kunden</param>
+        /// <param name="idBeschäftigungsArt">die Beschäftigungsart des Arbeitgeber des Kunden</param>
+        /// <param name="idBranche">die Branche des Arbeitgeber des Kunden</param>
+        /// <param name="beschäftigtSeit"> BeschäftigtSeit Wert des Kunden</param>
+        /// <param name="idKunde">die ID des Kunden</param>
+        /// <returns>true wenn das Speichern erfolgreich war, ansonsten false</returns>
+        public static bool ArbeitgeberAngabenSpeichern(string firmenName, int idBeschäftigungsArt, int idBranche, string beschäftigtSeit, int idKunde)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - ArbeitgeberAngabenSpeichern");
+            Debug.Indent();
+
+            bool erfolgreich = false;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+
+                    /// speichere zum Kunden die Angaben
+                    Kunde aktKunde = context.AlleKunden.Where(x => x.ID == idKunde).FirstOrDefault();
+
+                    if (aktKunde != null)
+                    {
+                        Arbeitgeber neuerArbeitgeber = new Arbeitgeber() {
+                            BeschaeftigtSeit = DateTime.Parse(beschäftigtSeit),
+                            FKBranche = idBranche,
+                            FKBeschaeftigungsArt = idBeschäftigungsArt,
+                            Firma = firmenName                        
+                        };
+                        aktKunde.Arbeitgeber = neuerArbeitgeber;
+                    }
+
+                    int anzahlZeilenBetroffen = context.SaveChanges();
+                    erfolgreich = anzahlZeilenBetroffen >= 1;
+                    Debug.WriteLine($"{anzahlZeilenBetroffen} ArbeitgeberDaten gespeichert!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in ArbeitgeberAngabenSpeichern");
                 Debug.Indent();
                 Debug.WriteLine(ex.Message);
                 Debug.Unindent();

@@ -31,7 +31,7 @@ namespace onlineKredit.logic
         public DbSet<Einstellungen> AlleEinstellungen { get; set; }
         public DbSet<FamilienStand> AlleFamilienStandAngaben { get; set; }
         public DbSet<FinanzielleSituation> AlleFinanzielleSituationen { get; set; }
-        public DbSet<IdentifikatikonsArt> AlleIdentifikationsArten { get; set; }
+        public DbSet<IdentifikationsArt> AlleIdentifikationsArten { get; set; }
         public DbSet<KontaktDaten> AlleKontaktDaten { get; set; }
         public DbSet<KontoDaten> AlleKontoDaten { get; set; }
         public DbSet<KreditWunsch> AlleKreditWünsche { get; set; }

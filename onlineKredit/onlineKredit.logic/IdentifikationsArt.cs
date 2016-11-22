@@ -12,15 +12,15 @@ namespace onlineKredit.logic
     using System;
     using System.Collections.Generic;
     
-    public partial class IdentifikatikonsArt
+    public partial class IdentifikationsArt
     {
-        public IdentifikatikonsArt()
+        public IdentifikationsArt()
         {
             this.AlleKunden = new HashSet<Kunde>();
         }
     
         public int ID { get; set; }
-        public string IdentifikationsArt { get; set; }
+        public string Bezeichnung { get; set; }
     
         public virtual ICollection<Kunde> AlleKunden { get; set; }
     }

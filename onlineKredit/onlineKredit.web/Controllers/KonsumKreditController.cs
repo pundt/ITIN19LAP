@@ -120,7 +120,7 @@ namespace onlineKredit.web.Controllers
                 alleIdentifikationsAngaben.Add(new IdentifikationsModel()
                 {
                     ID = identifikationsAngabe.ID.ToString(),
-                    Bezeichnung = identifikationsAngabe.IdentifikationsArt
+                    Bezeichnung = identifikationsAngabe.Bezeichnung
                 });
             }
             foreach (var land in KonsumKreditVerwaltung.LaenderLaden())
@@ -205,7 +205,36 @@ namespace onlineKredit.web.Controllers
         public ActionResult Arbeitgeber()
         {
             Debug.WriteLine("GET - KonsumKredit - Arbeitgeber");
-            return View();
+
+            List<BeschaeftigungsArtModel> alleBeschaeftigungen = new List<BeschaeftigungsArtModel>();
+            List<BrancheModel> alleBranchen = new List<BrancheModel>();
+
+            foreach (var branche in KonsumKreditVerwaltung.BranchenLaden())
+            {
+                alleBranchen.Add(new BrancheModel()
+                {
+                    ID = branche.ID.ToString(),
+                    Bezeichnung = branche.Bezeichnung
+                });
+            }
+
+            foreach (var beschaeftigungsArt in KonsumKreditVerwaltung.BeschaeftigungsArtenLaden())
+            {
+                alleBeschaeftigungen.Add(new BeschaeftigungsArtModel()
+                {
+                    ID = beschaeftigungsArt.ID.ToString(),
+                    Bezeichnung = beschaeftigungsArt.Bezeichnung
+                });
+            }
+
+            ArbeitgeberModel model = new ArbeitgeberModel()
+            {
+                AlleBeschaeftigungen = alleBeschaeftigungen,
+                AlleBranchen = alleBranchen,
+                ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value)
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -213,6 +242,20 @@ namespace onlineKredit.web.Controllers
         public ActionResult Arbeitgeber(ArbeitgeberModel model)
         {
             Debug.WriteLine("POST - KonsumKredit - Arbeitgeber");
+
+            if (ModelState.IsValid)
+            {
+                /// speichere Daten über BusinessLogic
+                if (KonsumKreditVerwaltung.ArbeitgeberAngabenSpeichern(
+                                                model.FirmenName,
+                                                model.ID_BeschäftigungsArt,
+                                                model.ID_Branche,
+                                                model.BeschäftigtSeit,
+                                                model.ID_Kunde))
+                {
+                    return RedirectToAction("KontoInformationen");
+                }
+            }
             return View();
         }
 
@@ -235,7 +278,17 @@ namespace onlineKredit.web.Controllers
         public ActionResult Zusammenfassung()
         {
             Debug.WriteLine("GET - KonsumKredit - Zusammenfassung");
-            return View();
+
+            /// ermittle für diese Kunden_ID
+            /// alle gespeicherten Daten (ACHTUNG! das sind viele ....)
+            /// gib Sie alle in das ZusammenfassungsModel (bzw. die UNTER-Modelle) 
+            /// hinein.
+            ZusammenfassungModel model = new ZusammenfassungModel();
+            model.ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value);
+
+
+            /// gib model an die View
+            return View(model);
         }
 
         [HttpPost]
