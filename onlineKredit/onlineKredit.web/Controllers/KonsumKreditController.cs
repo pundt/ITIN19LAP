@@ -276,6 +276,21 @@ namespace onlineKredit.web.Controllers
         public ActionResult KontoInformationen(KontoInformationenModel model)
         {
             Debug.WriteLine("POST - KonsumKredit - KontoInformationen");
+
+            if (ModelState.IsValid)
+            {
+                /// speichere Daten über BusinessLogic
+                if (KonsumKreditVerwaltung.KontoInformationenSpeichern(
+                                                model.BankName,
+                                                model.IBAN,
+                                                model.BIC,
+                                                model.NeuesKonto,
+                                                model.ID_Kunde))
+                {
+                    return RedirectToAction("Zusammenfassung");
+                }
+            }
+
             return View();
         }
 

@@ -557,5 +557,52 @@ namespace onlineKredit.logic
             Debug.Unindent();
             return erfolgreich;
         }
+
+        public static bool KontoInformationenSpeichern(string bankName, string iban, string bic, bool neuesKonto, int idKunde)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - KontoInformationenSpeichern");
+            Debug.Indent();
+
+            bool erfolgreich = false;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+
+                    /// speichere zum Kunden die Angaben
+                    Kunde aktKunde = context.AlleKunden.Where(x => x.ID == idKunde).FirstOrDefault();
+
+                    if (aktKunde != null)
+                    {
+                        KontoDaten neueKontoDaten = new KontoDaten()
+                        {
+                            BankName = bankName,
+                            IBAN = iban, 
+                            BIC = bic,
+                            IstDB_Kunde = !neuesKonto,
+                            ID = idKunde
+                        };
+
+                        context.AlleKontoDaten.Add(neueKontoDaten);
+                    }
+
+                    int anzahlZeilenBetroffen = context.SaveChanges();
+                    erfolgreich = anzahlZeilenBetroffen >= 1;
+                    Debug.WriteLine($"{anzahlZeilenBetroffen} Konto-Daten gespeichert!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in KontoInformationenSpeichern");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return erfolgreich;
+        }
     }
 }
