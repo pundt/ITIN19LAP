@@ -263,7 +263,12 @@ namespace onlineKredit.web.Controllers
         public ActionResult KontoInformationen()
         {
             Debug.WriteLine("GET - KonsumKredit - KontoInformationen");
-            return View();
+
+            KontoInformationenModel model = new KontoInformationenModel()
+            {
+                ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value)
+            };
+            return View(model);
         }
 
         [HttpPost]
