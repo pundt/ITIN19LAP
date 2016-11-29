@@ -306,6 +306,48 @@ namespace onlineKredit.web.Controllers
             ZusammenfassungModel model = new ZusammenfassungModel();
             model.ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value);
 
+            /// lädt ALLE Daten zu diesem Kunden (also auch die angehängten/referenzierten
+            /// Entities) aus der DB
+            Kunde aktKunde = KonsumKreditVerwaltung.KundeLaden(model.ID_Kunde);
+
+            model.GewünschterBetrag = (int)aktKunde.KreditWunsch.Betrag.Value;
+            model.Laufzeit = aktKunde.KreditWunsch.Laufzeit.Value;
+
+            model.NettoEinkommen = (double)aktKunde.FinanzielleSituation.MonatsEinkommen.Value;
+            model.Wohnkosten = (double) aktKunde.FinanzielleSituation.Wohnkosten.Value;
+            model.EinkünfteAlimenteUnterhalt = (double)aktKunde.FinanzielleSituation.EinkuenfteAlimenteUnterhalt.Value;
+            model.UnterhaltsZahlungen = (double)aktKunde.FinanzielleSituation.AusgabenALIUNT.Value;
+            model.RatenVerpflichtungen = (double)aktKunde.FinanzielleSituation.RatenZahlungen.Value;
+
+            model.Geschlecht = aktKunde.Gechlecht == "m" ? "Herr" : "Frau";
+            model.Vorname = aktKunde.Vorname;
+            model.Nachname = aktKunde.Nachname;
+            model.Titel = aktKunde.Titel?.Bezeichnung;
+            model.TitelNachstehend = aktKunde.TitelNachstehend?.Bezeichnung;
+            model.GeburtsDatum = DateTime.Now;
+            model.Staatsbuergerschaft = aktKunde.Staatsangehoerigkeit?.Bezeichnung;
+            model.AnzahlUnterhaltspflichtigeKinder = -1;
+            model.Familienstand = aktKunde.Familienstand?.Bezeichnung;
+            model.Wohnart = aktKunde.Wohnart?.Bezeichnung;
+            model.Bildung = aktKunde.Schulabschluss?.Bezeichnung;
+            model.Identifikationsart = aktKunde.IdentifikationsArt?.Bezeichnung;
+            model.IdentifikationsNummer = aktKunde.IdentifikationsNummer;
+
+            model.FirmenName = aktKunde.Arbeitgeber?.Firma;
+            model.BeschäftigungsArt = aktKunde.Arbeitgeber?.BeschaeftigungsArt?.Bezeichnung;
+            model.Branche = aktKunde.Arbeitgeber?.Branche?.Bezeichnung;
+            model.BeschäftigtSeit = aktKunde.Arbeitgeber?.BeschaeftigtSeit.Value.ToShortDateString();
+
+            model.Strasse = aktKunde.KontaktDaten?.Strasse;
+            model.Hausnummer = aktKunde.KontaktDaten?.Hausnummer;
+            model.Ort = aktKunde.KontaktDaten?.Ort.PLZ;
+            model.Mail = aktKunde.KontaktDaten?.EMail;
+            model.TelefonNummer = aktKunde.KontaktDaten?.Telefonnummer;
+
+            model.NeuesKonto = (bool) aktKunde.KontoDaten?.IstDB_Kunde.Value;
+            model.BankName = aktKunde.KontoDaten?.BankName;
+            model.IBAN = aktKunde.KontoDaten?.IBAN;
+            model.BIC = aktKunde.KontoDaten?.BIC;
 
             /// gib model an die View
             return View(model);
