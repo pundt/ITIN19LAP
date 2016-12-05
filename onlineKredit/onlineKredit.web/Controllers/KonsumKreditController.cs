@@ -16,7 +16,21 @@ namespace onlineKredit.web.Controllers
         {
             Debug.WriteLine("GET - KonsumKredit - KreditRahmen");
 
-            return View();
+            KreditRahmenModel model = new KreditRahmenModel()
+            {
+                GewünschterBetrag = 25000,  // default Werte
+                Laufzeit = 12   // default Werte
+            };
+            int id = -1;
+            if (Request.Cookies["idKunde"] != null && int.TryParse(Request.Cookies["idKunde"].Value, out id))
+            {
+                /// lade Daten aus Datenbank
+                KreditWunsch wunsch = KonsumKreditVerwaltung.KreditRahmenLaden(id);
+                model.GewünschterBetrag = (int)wunsch.Betrag.Value;
+                model.Laufzeit = wunsch.Laufzeit.Value;
+            }
+
+            return View(model);
         }
 
         [HttpPost]
@@ -28,17 +42,30 @@ namespace onlineKredit.web.Controllers
             if (ModelState.IsValid)
             {
                 /// speichere Daten über BusinessLogic
-                Kunde neuerKunde = KonsumKreditVerwaltung.ErzeugeKunde();
-
-                if (neuerKunde != null && KonsumKreditVerwaltung.KreditRahmenSpeichern(model.GewünschterBetrag, model.Laufzeit, neuerKunde.ID))
+                if (Request.Cookies["idKunde"] == null)
                 {
-                    /// ich benötige für alle weiteren Schritte die ID
-                    /// des angelegten Kunden. Damit ich diese bei der nächsten Action
-                    /// habe, speichere ich sie für diesen Zweck in ein Cookie
-                    Response.Cookies.Add(new HttpCookie("idKunde", neuerKunde.ID.ToString()));
+                    Kunde neuerKunde = KonsumKreditVerwaltung.ErzeugeKunde();
 
-                    /// gehe zum nächsten Schritt
-                    return RedirectToAction("FinanzielleSituation");
+                    if (neuerKunde != null && KonsumKreditVerwaltung.KreditRahmenSpeichern(model.GewünschterBetrag, model.Laufzeit, neuerKunde.ID))
+                    {
+                        /// ich benötige für alle weiteren Schritte die ID
+                        /// des angelegten Kunden. Damit ich diese bei der nächsten Action
+                        /// habe, speichere ich sie für diesen Zweck in ein Cookie
+                        Response.Cookies.Add(new HttpCookie("idKunde", neuerKunde.ID.ToString()));
+
+                        /// gehe zum nächsten Schritt
+                        return RedirectToAction("FinanzielleSituation");
+                    }
+                }
+                else
+                {
+                    int idKunde = int.Parse(Request.Cookies["idKunde"].Value);
+
+                    if (KonsumKreditVerwaltung.KreditRahmenSpeichern(model.GewünschterBetrag, model.Laufzeit, idKunde))
+                    {
+                        /// gehe zum nächsten Schritt
+                        return RedirectToAction("FinanzielleSituation");
+                    }
                 }
             }
 
@@ -56,6 +83,17 @@ namespace onlineKredit.web.Controllers
             {
                 ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value)
             };
+
+            FinanzielleSituation situation = KonsumKreditVerwaltung.FinanzielleSituationLaden(model.ID_Kunde);
+            if (situation != null)
+            {
+                model.EinkünfteAlimenteUnterhalt = (double)situation.EinkuenfteAlimenteUnterhalt.Value;
+                model.NettoEinkommen = (double)situation.MonatsEinkommen.Value;
+                model.RatenVerpflichtungen = (double)situation.RatenZahlungen.Value;
+                model.UnterhaltsZahlungen = (double)situation.AusgabenALIUNT.Value;
+                model.Wohnkosten = (double)situation.Wohnkosten.Value;
+            }
+
 
             return View(model);
         }
@@ -168,6 +206,24 @@ namespace onlineKredit.web.Controllers
                 AlleWohnartAngaben = alleWohnartAngaben,
                 ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value)
             };
+
+            Kunde kunde = KonsumKreditVerwaltung.PersönlicheDatenLaden(model.ID_Kunde);
+            if (kunde != null)
+            {
+                model.Geschlecht = kunde.Gechlecht == "m" ? Geschlecht.Männlich : Geschlecht.Weiblich;
+                model.Vorname = kunde.Vorname;
+                model.Nachname = kunde.Nachname;
+                model.ID_Titel = kunde.FKTitel;
+                model.ID_TitelNachstehend = kunde.FKTitelNachstehend;
+                model.GeburtsDatum = DateTime.Now;
+                model.ID_Staatsbuergerschaft = kunde.FKStaatsangehoerigkeit;
+                model.ID_Familienstand = kunde.FKFamilienstand.Value;
+                model.ID_Wohnart = kunde.FKWohnart.Value;
+                model.ID_Bildung = kunde.FKSchulabschluss.Value;
+                model.ID_Identifikationsart = kunde.FKIdentifikationsArt.Value;
+                model.IdentifikationsNummer = kunde.IdentifikationsNummer;
+            }
+
             return View(model);
         }
 
@@ -234,6 +290,15 @@ namespace onlineKredit.web.Controllers
                 ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value)
             };
 
+            Arbeitgeber arbeitgeberDaten = KonsumKreditVerwaltung.ArbeitgeberAngabenLaden(model.ID_Kunde);
+            if (arbeitgeberDaten != null)
+            {
+                model.BeschäftigtSeit = arbeitgeberDaten.BeschaeftigtSeit.Value.ToShortDateString();
+                model.FirmenName = arbeitgeberDaten.Firma;
+                model.ID_BeschäftigungsArt = arbeitgeberDaten.FKBeschaeftigungsArt.Value; ;
+                model.ID_Branche = arbeitgeberDaten.FKBranche.Value;
+            }
+
             return View(model);
         }
 
@@ -268,6 +333,15 @@ namespace onlineKredit.web.Controllers
             {
                 ID_Kunde = int.Parse(Request.Cookies["idKunde"].Value)
             };
+
+            KontoDaten daten = KonsumKreditVerwaltung.KontoInformationenLaden(model.ID_Kunde);
+            if (daten!=null)
+            {
+                model.BankName = daten.BankName;
+                model.BIC = daten.BIC;
+                model.IBAN = daten.IBAN;
+                model.NeuesKonto = !daten.IstDB_Kunde.Value;
+            }
             return View(model);
         }
 
@@ -314,7 +388,7 @@ namespace onlineKredit.web.Controllers
             model.Laufzeit = aktKunde.KreditWunsch.Laufzeit.Value;
 
             model.NettoEinkommen = (double)aktKunde.FinanzielleSituation.MonatsEinkommen.Value;
-            model.Wohnkosten = (double) aktKunde.FinanzielleSituation.Wohnkosten.Value;
+            model.Wohnkosten = (double)aktKunde.FinanzielleSituation.Wohnkosten.Value;
             model.EinkünfteAlimenteUnterhalt = (double)aktKunde.FinanzielleSituation.EinkuenfteAlimenteUnterhalt.Value;
             model.UnterhaltsZahlungen = (double)aktKunde.FinanzielleSituation.AusgabenALIUNT.Value;
             model.RatenVerpflichtungen = (double)aktKunde.FinanzielleSituation.RatenZahlungen.Value;
@@ -344,7 +418,7 @@ namespace onlineKredit.web.Controllers
             model.Mail = aktKunde.KontaktDaten?.EMail;
             model.TelefonNummer = aktKunde.KontaktDaten?.Telefonnummer;
 
-            model.NeuesKonto = (bool) aktKunde.KontoDaten?.IstDB_Kunde.Value;
+            model.NeuesKonto = (bool)aktKunde.KontoDaten?.IstDB_Kunde.Value;
             model.BankName = aktKunde.KontoDaten?.BankName;
             model.IBAN = aktKunde.KontoDaten?.IBAN;
             model.BIC = aktKunde.KontoDaten?.BIC;

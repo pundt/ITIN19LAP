@@ -51,6 +51,40 @@ namespace onlineKredit.logic
             return neuerKunde;
         }
 
+
+        /// <summary>
+        /// Lädt den Kreditrahmen für die übergebene ID
+        /// </summary>
+        /// <param name="id">die id des zu ladenden Kreditrahmens</param>
+        /// <returns>der Kreditwunsch für die übergebene ID</returns>
+        public static KreditWunsch KreditRahmenLaden(int id)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - KreditRahmenLaden");
+            Debug.Indent();
+
+            KreditWunsch wunsch = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    wunsch = context.AlleKreditWünsche.Where(x => x.ID == id).FirstOrDefault();
+                    Debug.WriteLine("KreditRahmen geladen!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in KreditRahmenLaden");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return wunsch;
+        }
+
         /// <summary>
         /// Speichert zu einer übergebenene ID_Kunde den Wunsch Kredit und dessen Laufzeit ab
         /// </summary>
@@ -75,14 +109,22 @@ namespace onlineKredit.logic
 
                     if (aktKunde != null)
                     {
-                        KreditWunsch neuerKreditWunsch = new KreditWunsch()
-                        {
-                            Betrag = (decimal)kreditBetrag,
-                            Laufzeit = laufzeit,
-                            ID = idKunde
-                        };
+                        /// ermittle ob es bereits einen Kreditwunsch gibt
+                        KreditWunsch neuerKreditWunsch = context.AlleKreditWünsche.FirstOrDefault(x => x.ID == idKunde);
 
-                        context.AlleKreditWünsche.Add(neuerKreditWunsch);
+                        /// nur wenn noch keiner existiert
+                        if (neuerKreditWunsch == null)
+                        {
+                            /// lege einen neuen an
+                            neuerKreditWunsch = new KreditWunsch()
+                            {
+                                Betrag = (decimal)kreditBetrag,
+                                Laufzeit = laufzeit,
+                                ID = idKunde
+                            };
+
+                            context.AlleKreditWünsche.Add(neuerKreditWunsch);
+                        }
                     }
 
                     int anzahlZeilenBetroffen = context.SaveChanges();
@@ -102,6 +144,40 @@ namespace onlineKredit.logic
             Debug.Unindent();
             return erfolgreich;
         }
+
+        /// <summary>
+        /// Lädt die FinanzielleSituation für die übergebene ID
+        /// </summary>
+        /// <param name="id">die id der zu ladenden FinanzielleSituation</param>
+        /// <returns>die FinanzielleSituation für die übergebene ID</returns>
+        public static FinanzielleSituation FinanzielleSituationLaden(int id)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - FinanzielleSituationLaden");
+            Debug.Indent();
+
+            FinanzielleSituation finanzielleSituation = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    finanzielleSituation = context.AlleFinanzielleSituationen.Where(x => x.ID == id).FirstOrDefault();
+                    Debug.WriteLine("FinanzielleSituation geladen!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in FinanzielleSituationLaden");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return finanzielleSituation;
+        }
+
 
         /// <summary>
         /// Speichert die Daten aus der Finanziellen Situation zu einem Kunden
@@ -130,22 +206,25 @@ namespace onlineKredit.logic
 
                     if (aktKunde != null)
                     {
-                        FinanzielleSituation neueFinanzielleSituation = new FinanzielleSituation()
+                        FinanzielleSituation finanzielleSituation = context.AlleFinanzielleSituationen.FirstOrDefault(x => x.ID == idKunde);
+
+                        if (finanzielleSituation == null)
                         {
-                            MonatsEinkommen = (decimal)nettoEinkommen,
-                            AusgabenALIUNT = (decimal)unterhaltsZahlungen,
-                            EinkuenfteAlimenteUnterhalt = (decimal)einkünfteAlimenteUnterhalt,
-                            Wohnkosten = (decimal)wohnkosten,
-                            RatenZahlungen = (decimal)ratenVerpflichtungen,
-                            ID = idKunde
-                        };
+                            finanzielleSituation = new FinanzielleSituation();
+                            context.AlleFinanzielleSituationen.Add(finanzielleSituation);
+                        }
 
-                        context.AlleFinanzielleSituationen.Add(neueFinanzielleSituation);
+                        finanzielleSituation.MonatsEinkommen = (decimal)nettoEinkommen;
+                        finanzielleSituation.AusgabenALIUNT = (decimal)unterhaltsZahlungen;
+                        finanzielleSituation.EinkuenfteAlimenteUnterhalt = (decimal)einkünfteAlimenteUnterhalt;
+                        finanzielleSituation.Wohnkosten = (decimal)wohnkosten;
+                        finanzielleSituation.RatenZahlungen = (decimal)ratenVerpflichtungen;
+                        finanzielleSituation.ID = idKunde;
+
+                        int anzahlZeilenBetroffen = context.SaveChanges();
+                        erfolgreich = anzahlZeilenBetroffen >= 1;
+                        Debug.WriteLine($"{anzahlZeilenBetroffen} FinanzielleSituation gespeichert!");
                     }
-
-                    int anzahlZeilenBetroffen = context.SaveChanges();
-                    erfolgreich = anzahlZeilenBetroffen >= 1;
-                    Debug.WriteLine($"{anzahlZeilenBetroffen} FinanzielleSituation gespeichert!");
                 }
             }
             catch (Exception ex)
@@ -488,6 +567,39 @@ namespace onlineKredit.logic
         }
 
         /// <summary>
+        /// Lädt den Kunden für die übergebene ID
+        /// </summary>
+        /// <param name="id">die id des zu ladenden Kunden</param>
+        /// <returns>der Kunde für die übergebene ID</returns>
+        public static Kunde PersönlicheDatenLaden(int id)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - PersönlicheDatenLaden");
+            Debug.Indent();
+
+            Kunde persönlicheDaten = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    persönlicheDaten = context.AlleKunden.Where(x => x.ID == id).FirstOrDefault();
+                    Debug.WriteLine("PersönlicheDatenLaden geladen!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in PersönlicheDatenLaden");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return persönlicheDaten;
+        }
+
+        /// <summary>
         /// Speichert die Daten für die übergebene idKunde
         /// </summary>
         /// <param name="idTitel">der Titel des Kunden</param>
@@ -553,6 +665,39 @@ namespace onlineKredit.logic
         }
 
         /// <summary>
+        /// Lädt den Kreditrahmen für die übergebene ID
+        /// </summary>
+        /// <param name="id">die id des zu ladenden Kreditrahmens</param>
+        /// <returns>der Kreditwunsch für die übergebene ID</returns>
+        public static Arbeitgeber ArbeitgeberAngabenLaden(int id)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - ArbeitgeberAngabenLaden");
+            Debug.Indent();
+
+            Arbeitgeber arbeitGeber = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    arbeitGeber = context.AlleArbeitgeber.Where(x => x.ID == id).FirstOrDefault();
+                    Debug.WriteLine("ArbeitgeberAngaben geladen!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in ArbeitgeberAngabenLaden");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return arbeitGeber;
+        }
+
+        /// <summary>
         /// Speichert die Angaben des Arbeitsgebers zu einem Kunden
         /// </summary>
         /// <param name="firmenName">der Firmenname des Arbeitgeber des Kunden</param>
@@ -578,13 +723,18 @@ namespace onlineKredit.logic
 
                     if (aktKunde != null)
                     {
-                        Arbeitgeber neuerArbeitgeber = new Arbeitgeber() {
-                            BeschaeftigtSeit = DateTime.Parse(beschäftigtSeit),
-                            FKBranche = idBranche,
-                            FKBeschaeftigungsArt = idBeschäftigungsArt,
-                            Firma = firmenName                        
-                        };
-                        aktKunde.Arbeitgeber = neuerArbeitgeber;
+                        Arbeitgeber arbeitgeber = context.AlleArbeitgeber.FirstOrDefault(x => x.ID == idKunde);
+
+                        if (arbeitgeber==null)
+                        {
+                            arbeitgeber = new Arbeitgeber();
+                            context.AlleArbeitgeber.Add(arbeitgeber);
+                        }
+                        arbeitgeber.BeschaeftigtSeit = DateTime.Parse(beschäftigtSeit);
+                        arbeitgeber.FKBranche = idBranche;
+                        arbeitgeber.FKBeschaeftigungsArt = idBeschäftigungsArt;
+                        arbeitgeber.Firma = firmenName;                        
+                        aktKunde.Arbeitgeber = arbeitgeber;
                     }
 
                     int anzahlZeilenBetroffen = context.SaveChanges();
@@ -605,6 +755,39 @@ namespace onlineKredit.logic
             return erfolgreich;
         }
 
+        /// <summary>
+        /// Lädt die KontoDaten für die übergebene ID
+        /// </summary>
+        /// <param name="id">die id der zu ladenden KontoDaten</param>
+        /// <returns>die KontoDaten für die übergebene ID</returns>
+        public static KontoDaten KontoInformationenLaden(int id)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - KontoInformationenLaden");
+            Debug.Indent();
+
+            KontoDaten kontoDaten = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    kontoDaten = context.AlleKontoDaten.Where(x => x.ID == id).FirstOrDefault();
+                    Debug.WriteLine("KontoInformationen geladen!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in KontoInformationenLaden");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return kontoDaten;
+        }
+
         public static bool KontoInformationenSpeichern(string bankName, string iban, string bic, bool neuesKonto, int idKunde)
         {
             Debug.WriteLine("KonsumKreditVerwaltung - KontoInformationenSpeichern");
@@ -622,16 +805,18 @@ namespace onlineKredit.logic
 
                     if (aktKunde != null)
                     {
-                        KontoDaten neueKontoDaten = new KontoDaten()
-                        {
-                            BankName = bankName,
-                            IBAN = iban, 
-                            BIC = bic,
-                            IstDB_Kunde = !neuesKonto,
-                            ID = idKunde
-                        };
+                        KontoDaten kontoDaten = context.AlleKontoDaten.FirstOrDefault(x => x.ID == idKunde);
 
-                        context.AlleKontoDaten.Add(neueKontoDaten);
+                        if (kontoDaten== null)
+                        {
+                            kontoDaten = new KontoDaten();
+                            context.AlleKontoDaten.Add(kontoDaten);
+                        }
+                        kontoDaten.BankName = bankName;
+                        kontoDaten.IBAN = iban;
+                        kontoDaten.BIC = bic;
+                        kontoDaten.IstDB_Kunde = !neuesKonto;
+                        kontoDaten.ID = idKunde;                        
                     }
 
                     int anzahlZeilenBetroffen = context.SaveChanges();
