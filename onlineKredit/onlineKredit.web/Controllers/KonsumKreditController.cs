@@ -1,4 +1,5 @@
-﻿using onlineKredit.logic;
+﻿using onlineKredit.freigabe;
+using onlineKredit.logic;
 using onlineKredit.web.Models;
 using System;
 using System.Collections.Generic;
@@ -210,17 +211,17 @@ namespace onlineKredit.web.Controllers
             Kunde kunde = KonsumKreditVerwaltung.PersönlicheDatenLaden(model.ID_Kunde);
             if (kunde != null)
             {
-                model.Geschlecht = kunde.Gechlecht == "m" ? Geschlecht.Männlich : Geschlecht.Weiblich;
+                model.Geschlecht = !string.IsNullOrEmpty(kunde.Gechlecht) &&  kunde.Gechlecht == "m" ? Geschlecht.Männlich : Geschlecht.Weiblich;
                 model.Vorname = kunde.Vorname;
                 model.Nachname = kunde.Nachname;
-                model.ID_Titel = kunde.FKTitel;
-                model.ID_TitelNachstehend = kunde.FKTitelNachstehend;
-                model.GeburtsDatum = DateTime.Now;
+                model.ID_Titel = kunde.FKTitel.HasValue ? kunde.FKTitel.Value : 0;
+                model.ID_TitelNachstehend = kunde.FKTitelNachstehend.HasValue ? kunde.FKTitelNachstehend.Value : 0;
+                //model.GeburtsDatum = DateTime.Now;
                 model.ID_Staatsbuergerschaft = kunde.FKStaatsangehoerigkeit;
-                model.ID_Familienstand = kunde.FKFamilienstand.Value;
-                model.ID_Wohnart = kunde.FKWohnart.Value;
-                model.ID_Bildung = kunde.FKSchulabschluss.Value;
-                model.ID_Identifikationsart = kunde.FKIdentifikationsArt.Value;
+                model.ID_Familienstand = kunde.FKFamilienstand.HasValue ? kunde.FKFamilienstand.Value : 0;
+                model.ID_Wohnart = kunde.FKWohnart.HasValue ? kunde.FKWohnart.Value : 0;
+                model.ID_Bildung = kunde.FKSchulabschluss.HasValue ? kunde.FKSchulabschluss.Value : 0;
+                model.ID_Identifikationsart = kunde.FKIdentifikationsArt.HasValue ? kunde.FKIdentifikationsArt.Value : 0;
                 model.IdentifikationsNummer = kunde.IdentifikationsNummer;
             }
 
@@ -432,7 +433,24 @@ namespace onlineKredit.web.Controllers
         public ActionResult Zusammenfassung(ZusammenfassungModel model)
         {
             Debug.WriteLine("POST - KonsumKredit - Zusammenfassung");
-            return View();
+            Debug.Indent();
+
+            Response.Cookies.Remove("idKunde");
+
+            bool istFreigegeben = KreditFreigabe.FreigabeErteilt(
+                                                        model.Vorname, 
+                                                        model.Nachname, 
+                                                        model.NettoEinkommen, 
+                                                        model.Wohnkosten, 
+                                                        model.EinkünfteAlimenteUnterhalt, 
+                                                        model.UnterhaltsZahlungen, 
+                                                        model.RatenVerpflichtungen);
+
+            /// Rüfe Service/DLL auf und prüfe auf Kreditfreigabe
+            Debug.WriteLine($"Kreditfreigabe {(istFreigegeben ? "" : "nicht")}erteilt!");
+
+            Debug.Unindent();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

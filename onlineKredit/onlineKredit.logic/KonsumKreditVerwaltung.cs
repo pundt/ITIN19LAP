@@ -110,25 +110,23 @@ namespace onlineKredit.logic
                     if (aktKunde != null)
                     {
                         /// ermittle ob es bereits einen Kreditwunsch gibt
-                        KreditWunsch neuerKreditWunsch = context.AlleKreditWünsche.FirstOrDefault(x => x.ID == idKunde);
+                        KreditWunsch kreditWunsch = context.AlleKreditWünsche.FirstOrDefault(x => x.ID == idKunde);
 
                         /// nur wenn noch keiner existiert
-                        if (neuerKreditWunsch == null)
+                        if (kreditWunsch == null)
                         {
                             /// lege einen neuen an
-                            neuerKreditWunsch = new KreditWunsch()
-                            {
-                                Betrag = (decimal)kreditBetrag,
-                                Laufzeit = laufzeit,
-                                ID = idKunde
-                            };
-
-                            context.AlleKreditWünsche.Add(neuerKreditWunsch);
+                            kreditWunsch = new KreditWunsch();
+                            context.AlleKreditWünsche.Add(kreditWunsch);
                         }
+
+                        kreditWunsch.Betrag = (decimal)kreditBetrag;
+                        kreditWunsch.Laufzeit = laufzeit;
+                        kreditWunsch.ID = idKunde;
                     }
 
                     int anzahlZeilenBetroffen = context.SaveChanges();
-                    erfolgreich = anzahlZeilenBetroffen >= 1;
+                    erfolgreich = anzahlZeilenBetroffen >= 0;
                     Debug.WriteLine($"{anzahlZeilenBetroffen} KreditRahmen gespeichert!");
                 }
             }
@@ -222,7 +220,7 @@ namespace onlineKredit.logic
                         finanzielleSituation.ID = idKunde;
 
                         int anzahlZeilenBetroffen = context.SaveChanges();
-                        erfolgreich = anzahlZeilenBetroffen >= 1;
+                        erfolgreich = anzahlZeilenBetroffen >= 0;
                         Debug.WriteLine($"{anzahlZeilenBetroffen} FinanzielleSituation gespeichert!");
                     }
                 }
@@ -647,7 +645,7 @@ namespace onlineKredit.logic
                     }
 
                     int anzahlZeilenBetroffen = context.SaveChanges();
-                    erfolgreich = anzahlZeilenBetroffen >= 1;
+                    erfolgreich = anzahlZeilenBetroffen >= 0;
                     Debug.WriteLine($"{anzahlZeilenBetroffen} PersönlicheDaten gespeichert!");
                 }
             }
@@ -738,7 +736,7 @@ namespace onlineKredit.logic
                     }
 
                     int anzahlZeilenBetroffen = context.SaveChanges();
-                    erfolgreich = anzahlZeilenBetroffen >= 1;
+                    erfolgreich = anzahlZeilenBetroffen >= 0;
                     Debug.WriteLine($"{anzahlZeilenBetroffen} ArbeitgeberDaten gespeichert!");
                 }
             }
@@ -820,7 +818,7 @@ namespace onlineKredit.logic
                     }
 
                     int anzahlZeilenBetroffen = context.SaveChanges();
-                    erfolgreich = anzahlZeilenBetroffen >= 1;
+                    erfolgreich = anzahlZeilenBetroffen >= 0;
                     Debug.WriteLine($"{anzahlZeilenBetroffen} Konto-Daten gespeichert!");
                 }
             }

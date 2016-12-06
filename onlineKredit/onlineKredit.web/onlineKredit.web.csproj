@@ -241,6 +241,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\onlineKredit.freigabe\onlineKredit.freigabe.csproj">
+      <Project>{040BEE89-E319-4F30-AE5B-034F68CFD1A0}</Project>
+      <Name>onlineKredit.freigabe</Name>
+    </ProjectReference>
     <ProjectReference Include="..\onlineKredit.logic\onlineKredit.logic.csproj">
       <Project>{0adf6ab3-481c-4a32-9ab5-6f30ce37fd9a}</Project>
       <Name>onlineKredit.logic</Name>
