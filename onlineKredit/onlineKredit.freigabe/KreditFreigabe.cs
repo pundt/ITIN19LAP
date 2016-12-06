@@ -21,8 +21,10 @@ namespace onlineKredit.freigabe
         /// <param name="ratenZahlungen">die monatlichen Ratenzahlungen des Antragsteller</param>
         /// <returns></returns>
         public static bool FreigabeErteilt(
+            string geschlecht,
             string vorname,
             string nachname,
+            string familienStand,
             double monatsEinkommen,
             double wohnKosten,
             double einkuenfteAlimente,
@@ -48,8 +50,42 @@ namespace onlineKredit.freigabe
             if (ratenZahlungen <= 0 || ratenZahlungen > 10000)
                 throw new ArgumentException($"Ungültigter Wert für {nameof(ratenZahlungen)}");
 
-            /// aktuell reiner fake
-            freigabe = DateTime.Now.Millisecond % 2 == 0;
+            double verfügbarerBetrag = monatsEinkommen + einkuenfteAlimente - wohnKosten - einkuenfteAlimente - ausgabenAlimente - ratenZahlungen;
+            double verhältnisWohkostenVerfügbarerBetrag = wohnKosten / verfügbarerBetrag;
+
+            switch (familienStand)
+            {
+                case "ledig":
+                case "verwitwet":
+                    switch (geschlecht)
+                    {
+                        case "m":
+                            freigabe = verfügbarerBetrag > wohnKosten * 2;
+                            break;
+                        case "w":
+                            freigabe = verfügbarerBetrag > wohnKosten * 1.8;
+                            break;
+                        default:
+                            throw new ArgumentException($"Ungültiger Wert für {nameof(geschlecht)}!\n\nNur 'm' oder 'w' erlaubt.");
+                            break;
+                    }
+                    
+                    break;
+                case "in Partnerschaft":
+                case "verheiratet":
+                    if (verhältnisWohkostenVerfügbarerBetrag < 0.5)
+                    {
+                        freigabe = verfügbarerBetrag > wohnKosten * 2.5;
+                    }
+                    else
+                    {
+                        freigabe = verfügbarerBetrag > wohnKosten * 3.5;
+                    }
+                    break;
+                default:
+                    throw new ArgumentException($"Ungültiger Wert für {nameof(familienStand)}!\n\nNur 'ledig', 'verwitwet', 'in Partnerschaft', 'verheiratet' erlaubt.");
+                    break;
+            }
 
             Debug.Unindent();
             return freigabe;
