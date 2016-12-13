@@ -1,0 +1,14 @@
+1. Oberfläche für Kontodaten erweitern
+2. Radiobuttons für Auswahl
+3. Kreditkartendaten (Inhaber, Nummer, Gültig bis)
+4. am Server alles validieren (Luhn usw)
+5. speichern und weiter
+
+DB
+neue Tabelle - KreditkartenDaten
+ID=FK auf Kunde
+Inhaber
+Nummer
+Gültig bis
+
+

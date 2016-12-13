@@ -424,6 +424,34 @@ namespace onlineKredit.logic
             return alleWohnarten;
         }
 
+        public static KreditKarte KreditKartenDatenLaden(int id)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - KreditKartenDatenLaden");
+            Debug.Indent();
+
+            KreditKarte kkDaten = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    kkDaten = context.AlleKreditKarten.Where(x => x.ID == id).FirstOrDefault();
+                    Debug.WriteLine("KreditKartenDatenLaden geladen!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in KreditKartenDatenLaden");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return kkDaten;
+        }
+
         /// <summary>
         /// Liefert alle IdentifikatikonsArt zurück
         /// </summary>
@@ -833,6 +861,55 @@ namespace onlineKredit.logic
 
             Debug.Unindent();
             return erfolgreich;
+        }
+
+        public static bool KreditKartenDatenSpeichern(string inhaber, string nummer, DateTime gültigBis, int idKunde)
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - KreditKartenDatenSpeichern");
+            Debug.Indent();
+
+            bool erfolgreich = false;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+
+                    /// speichere zum Kunden die Angaben
+                    Kunde aktKunde = context.AlleKunden.Where(x => x.ID == idKunde).FirstOrDefault();
+
+                    if (aktKunde != null)
+                    {
+                        KreditKarte kreditKartenDaten = context.AlleKreditKarten.FirstOrDefault(x => x.ID == idKunde);
+
+                        if (kreditKartenDaten == null)
+                        {
+                            kreditKartenDaten = new KreditKarte();
+                            context.AlleKreditKarten.Add(kreditKartenDaten);
+                        }
+                        kreditKartenDaten.Inhaber = inhaber;
+                        kreditKartenDaten.Nummer= nummer;
+                        kreditKartenDaten.GültigBis = gültigBis;
+                        kreditKartenDaten.ID = idKunde;
+                    }
+
+                    int anzahlZeilenBetroffen = context.SaveChanges();
+                    erfolgreich = anzahlZeilenBetroffen >= 0;
+                    Debug.WriteLine($"{anzahlZeilenBetroffen} KreditKarten-Daten gespeichert!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in KreditKartenDatenSpeichern");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return erfolgreich;
+
         }
     }
 }

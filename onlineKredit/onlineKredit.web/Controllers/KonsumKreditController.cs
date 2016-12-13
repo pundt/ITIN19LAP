@@ -343,24 +343,48 @@ namespace onlineKredit.web.Controllers
                 model.IBAN = daten.IBAN;
                 model.NeuesKonto = !daten.IstDB_Kunde.Value;
             }
+
+            KreditKarte kkDaten = KonsumKreditVerwaltung.KreditKartenDatenLaden(model.ID_Kunde);
+            if (kkDaten != null)
+            {
+                model.KreditKartenInhaber = kkDaten.Inhaber;
+                model.KreditKartenNummer = kkDaten.Nummer;
+                model.KreditKartenGültigBis = kkDaten.GültigBis.ToString("MM.yyyy");
+            }
+
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult KontoInformationen(KontoInformationenModel model)
+        public ActionResult KontoInformationen(KontoInformationenModel model, string auswahl)
         {
             Debug.WriteLine("POST - KonsumKredit - KontoInformationen");
 
             if (ModelState.IsValid)
             {
                 /// speichere Daten über BusinessLogic
-                if (KonsumKreditVerwaltung.KontoInformationenSpeichern(
-                                                model.BankName,
-                                                model.IBAN,
-                                                model.BIC,
-                                                model.NeuesKonto,
-                                                model.ID_Kunde))
+                bool erfolgreich = false;
+
+                if (auswahl == "neu" || auswahl == "bestehend")
+                {
+                    erfolgreich = KonsumKreditVerwaltung.KontoInformationenSpeichern(
+                                    model.BankName,
+                                    model.IBAN,
+                                    model.BIC,
+                                    auswahl == "neu",
+                                    model.ID_Kunde);
+                }
+                else if (auswahl == "kreditkarte")
+                {
+                    erfolgreich = KonsumKreditVerwaltung.KreditKartenDatenSpeichern(
+                                    model.KreditKartenInhaber,
+                                    model.KreditKartenNummer,
+                                    DateTime.Parse(model.KreditKartenGültigBis),
+                                    model.ID_Kunde);
+                }
+
+                if (erfolgreich)
                 {
                     return RedirectToAction("Zusammenfassung");
                 }

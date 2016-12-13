@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9f84c33297cf4e2789be7e11b86dc5a4" Name="Diagram1" ZoomLevel="97">
+      <Diagram DiagramId="9f84c33297cf4e2789be7e11b86dc5a4" Name="Diagram1" ZoomLevel="121">
         <EntityTypeShape EntityType="onlineKreditModel.Arbeitgeber" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="onlineKreditModel.Beschaeftigungsart" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="onlineKreditModel.Branche" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
@@ -38,6 +38,8 @@
         <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKWohn__286302EC" ManuallyRouted="false" />
         <AssociationConnector Association="onlineKreditModel.FK__tblOrt__FKLand__145C0A3F" ManuallyRouted="false" />
         <AssociationConnector Association="onlineKreditModel.FK__tblKunde__FKStaa__25869641" />
+        <EntityTypeShape EntityType="onlineKreditModel.KreditKarte" Width="1.5" PointX="5.25" PointY="12.375" />
+        <AssociationConnector Association="onlineKreditModel.FK_KreditKarte_Kunde" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

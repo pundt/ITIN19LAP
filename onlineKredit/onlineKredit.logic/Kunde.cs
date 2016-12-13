@@ -39,5 +39,6 @@ namespace onlineKredit.logic
         public virtual TitelNachstehend TitelNachstehend { get; set; }
         public virtual Wohnart Wohnart { get; set; }
         public virtual Land Staatsangehoerigkeit { get; set; }
+        public virtual KreditKarte tblKreditKarte { get; set; }
     }
 }

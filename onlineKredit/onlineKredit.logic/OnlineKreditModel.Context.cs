@@ -42,5 +42,6 @@ namespace onlineKredit.logic
         public DbSet<Titel> AlleTitel { get; set; }
         public DbSet<TitelNachstehend> AlleTitelNachstehend { get; set; }
         public DbSet<Wohnart> AlleWohnarten { get; set; }
+        public DbSet<KreditKarte> AlleKreditKarten { get; set; }
     }
 }

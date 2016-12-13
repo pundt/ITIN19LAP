@@ -94,6 +94,15 @@
           <Property Name="GewuenschterKredit" Type="decimal" Precision="10" Scale="2" />
           <Property Name="GewuenschteLaufzeit" Type="int" />
         </EntityType>
+        <EntityType Name="tblKreditKarte">
+          <Key>
+            <PropertyRef Name="IDKreditKarte" />
+          </Key>
+          <Property Name="IDKreditKarte" Type="int" Nullable="false" />
+          <Property Name="Inhaber" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Nummer" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="GültigBis" Type="smalldatetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblKunde">
           <Key>
             <PropertyRef Name="IDKunde" />
@@ -347,6 +356,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_KreditKarte_Kunde">
+          <End Role="tblKunde" Type="Self.tblKunde" Multiplicity="1" />
+          <End Role="tblKreditKarte" Type="Self.tblKreditKarte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblKunde">
+              <PropertyRef Name="IDKunde" />
+            </Principal>
+            <Dependent Role="tblKreditKarte">
+              <PropertyRef Name="IDKreditKarte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="onlineKreditModelStoreContainer">
           <EntitySet Name="tblArbeitgeber" EntityType="Self.tblArbeitgeber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBeschaeftigungsart" EntityType="Self.tblBeschaeftigungsart" Schema="dbo" store:Type="Tables" />
@@ -358,6 +379,7 @@
           <EntitySet Name="tblKontaktDaten" EntityType="Self.tblKontaktDaten" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblKontoDaten" EntityType="Self.tblKontoDaten" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblKredit" EntityType="Self.tblKredit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblKreditKarte" EntityType="Self.tblKreditKarte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblKunde" EntityType="Self.tblKunde" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblLand" EntityType="Self.tblLand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrt" EntityType="Self.tblOrt" Schema="dbo" store:Type="Tables" />
@@ -428,6 +450,10 @@
           <AssociationSet Name="FK__tblOrt__FKLand__145C0A3F" Association="Self.FK__tblOrt__FKLand__145C0A3F">
             <End Role="tblLand" EntitySet="tblLand" />
             <End Role="tblOrt" EntitySet="tblOrt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KreditKarte_Kunde" Association="Self.FK_KreditKarte_Kunde">
+            <End Role="tblKunde" EntitySet="tblKunde" />
+            <End Role="tblKreditKarte" EntitySet="tblKreditKarte" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -563,6 +589,7 @@
           <NavigationProperty Name="Wohnart" Relationship="Self.FK__tblKunde__FKWohn__286302EC" FromRole="tblKunde" ToRole="tblWohnart" />
           <NavigationProperty Name="Staatsangehoerigkeit" Relationship="onlineKreditModel.FK__tblKunde__FKStaa__25869641" FromRole="Kunde" ToRole="Land" />
           <Property Name="Gechlecht" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tblKreditKarte" Relationship="onlineKreditModel.FK_KreditKarte_Kunde" FromRole="Kunde" ToRole="tblKreditKarte" />
         </EntityType>
         <EntityType Name="Land">
           <Key>
@@ -878,6 +905,11 @@
             <End Role="Land" EntitySet="AlleLänder" />
             <End Role="Kunde" EntitySet="AlleKunden" />
           </AssociationSet>
+          <EntitySet Name="AlleKreditKarten" EntityType="onlineKreditModel.KreditKarte" />
+          <AssociationSet Name="FK_KreditKarte_Kunde" Association="onlineKreditModel.FK_KreditKarte_Kunde">
+            <End Role="Kunde" EntitySet="AlleKunden" />
+            <End Role="tblKreditKarte" EntitySet="AlleKreditKarten" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__tblKunde__FKStaa__25869641">
           <End Type="onlineKreditModel.Land" Role="Land" Multiplicity="0..1" />
@@ -888,6 +920,28 @@
             </Principal>
             <Dependent Role="Kunde">
               <PropertyRef Name="FKStaatsangehoerigkeit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="KreditKarte">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Inhaber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Nummer" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GültigBis" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Kunde" Relationship="onlineKreditModel.FK_KreditKarte_Kunde" FromRole="tblKreditKarte" ToRole="Kunde" />
+        </EntityType>
+        <Association Name="FK_KreditKarte_Kunde">
+          <End Type="onlineKreditModel.Kunde" Role="Kunde" Multiplicity="1" />
+          <End Type="onlineKreditModel.KreditKarte" Role="tblKreditKarte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Kunde">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblKreditKarte">
+              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1061,6 +1115,16 @@
               <MappingFragment StoreEntitySet="tblWohnart">
                 <ScalarProperty Name="ID" ColumnName="IDWohnart" />
                 <ScalarProperty Name="Bezeichnung" ColumnName="Wohnart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlleKreditKarten">
+            <EntityTypeMapping TypeName="onlineKreditModel.KreditKarte">
+              <MappingFragment StoreEntitySet="tblKreditKarte">
+                <ScalarProperty Name="GültigBis" ColumnName="GültigBis" />
+                <ScalarProperty Name="Nummer" ColumnName="Nummer" />
+                <ScalarProperty Name="Inhaber" ColumnName="Inhaber" />
+                <ScalarProperty Name="ID" ColumnName="IDKreditKarte" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
