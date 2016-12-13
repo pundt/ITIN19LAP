@@ -956,5 +956,50 @@ namespace onlineKredit.logic
             Debug.Unindent();
             return alleKunden;
         }
+
+        public static List<Kunde> LetzteKundenLaden()
+        {
+            Debug.WriteLine("KonsumKreditVerwaltung - LetzteKundenLaden");
+            Debug.Indent();
+
+            List<Kunde> alleKunden = null;
+
+            try
+            {
+                using (var context = new OnlineKredit())
+                {
+                    alleKunden = context.AlleKunden
+                        .Include("Arbeitgeber")
+                        .Include("Arbeitgeber.BeschaeftigungsArt")
+                        .Include("Arbeitgeber.Branche")
+                        .Include("Familienstand")
+                        .Include("FinanzielleSituation")
+                        .Include("IdentifikationsArt")
+                        .Include("KontaktDaten")
+                        .Include("KontoDaten")
+                        .Include("KreditWunsch")
+                        .Include("Schulabschluss")
+                        .Include("Titel")
+                        .Include("TitelNachstehend")
+                        .Include("Wohnart")
+                        .Include("Staatsangehoerigkeit")
+                        .Where(x => (x.KontoDaten != null || x.KreditKarte != null))
+                        .OrderByDescending(x => x.ID)
+                        .Take(10)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Fehler in LetzteKundenLaden");
+                Debug.Indent();
+                Debug.WriteLine(ex.Message);
+                Debug.Unindent();
+                Debugger.Break();
+            }
+
+            Debug.Unindent();
+            return alleKunden;
+        }
     }
 }
