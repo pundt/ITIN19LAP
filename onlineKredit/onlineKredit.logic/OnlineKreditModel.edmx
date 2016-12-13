@@ -589,7 +589,7 @@
           <NavigationProperty Name="Wohnart" Relationship="Self.FK__tblKunde__FKWohn__286302EC" FromRole="tblKunde" ToRole="tblWohnart" />
           <NavigationProperty Name="Staatsangehoerigkeit" Relationship="onlineKreditModel.FK__tblKunde__FKStaa__25869641" FromRole="Kunde" ToRole="Land" />
           <Property Name="Gechlecht" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="tblKreditKarte" Relationship="onlineKreditModel.FK_KreditKarte_Kunde" FromRole="Kunde" ToRole="tblKreditKarte" />
+          <NavigationProperty Name="KreditKarte" Relationship="onlineKreditModel.FK_KreditKarte_Kunde" FromRole="Kunde" ToRole="tblKreditKarte" />
         </EntityType>
         <EntityType Name="Land">
           <Key>

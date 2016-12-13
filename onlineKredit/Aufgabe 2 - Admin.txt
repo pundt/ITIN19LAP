@@ -1,0 +1,6 @@
+Admin-Zugang
+
+Benutzername Passwort prüfen
+	entweder mit DB Anbindungen oder fake weise mit statischen Daten
+
+Danach Anzeige der letzten 10 Kreditanträge

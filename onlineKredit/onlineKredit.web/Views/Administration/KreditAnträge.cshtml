@@ -1,0 +1,67 @@
+﻿@model IEnumerable<onlineKredit.web.Models.ZusammenfassungModel>
+
+@{
+    ViewBag.Title = "KreditAnträge";
+}
+
+<h2>KreditAnträge</h2>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.GewünschterBetrag)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Laufzeit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vorname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nachname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Familienstand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bildung)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BeschäftigtSeit)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GewünschterBetrag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Laufzeit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vorname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nachname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Familienstand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bildung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeschäftigtSeit)
+            </td>
+
+            <td>
+                @Html.ActionLink("Erneute Prüfung", "Edit", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>

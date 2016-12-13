@@ -11,7 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "onlineKredit.freigabe", "on
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Planung", "Planung", "{708CF735-D83D-4F66-AD8D-EE97631E4E2F}"
 	ProjectSection(SolutionItems) = preProject
+		Aufgabe 1 - Entwurf.jpg = Aufgabe 1 - Entwurf.jpg
 		Aufgabe 1 - Kreditkarte.txt = Aufgabe 1 - Kreditkarte.txt
+		Aufgabe 2 - Admin.txt = Aufgabe 2 - Admin.txt
+		Aufgabe 2 - Entwurf.jpg = Aufgabe 2 - Entwurf.jpg
+		Aufgabe 3 - Entwurf.jpeg = Aufgabe 3 - Entwurf.jpeg
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umsetzung", "Umsetzung", "{5E7078B1-18F2-446D-944F-A5A59DDAB674}"
